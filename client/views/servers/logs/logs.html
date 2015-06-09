@@ -1,0 +1,26 @@
+<template name="logs">
+<div id="logs">
+	<div class="col-md-12">
+		<div class="panel panel-purple1">
+			<!-- Default panel contents -->
+			<div class="panel-heading">
+				<h4 class="panel-title">Server logs</h4>
+			</div>
+			<div class="panel-body console">
+				{{#each logs}}
+				<p class="log-line row">
+					<div class="col-md-2">
+						<span class="log-type label label-info">{{type}}</span>
+						<span class="log-date label label-default">{{moment createdAt}}</span>
+					</div>
+					<div class="col-md-10">
+						<span class="log-text">{{text}}</span>
+					</div>
+				</p>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+	
+</div>
+</template>

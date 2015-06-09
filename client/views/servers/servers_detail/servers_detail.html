@@ -1,0 +1,91 @@
+<template name="servers_detail">
+<div id="servers_detail">
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		<h1>List of servers</h1>
+		<!-- <ul class="list-group"> -->
+		{{#each servers}}
+		<!-- <li class="list-group-item"> -->
+		<div class="panel panel-blue1">
+			<!-- Default panel contents -->
+			<div class="panel-heading">
+				<img src="/images/logo_{{platform}}.png" class="img_logo" alt="">
+				<a href="{{pathFor 'servers_health'}}">{{hostname}}</a>
+			</div>
+			<!-- <div class="panel-body">
+				
+				{{platform}} {{arch}}
+			</div>
+			 -->
+			<!-- Table -->
+			<table class="table">
+				<!-- <thead>
+					<tr>
+						<th>Heading 1</th>
+						<th>Heading 2</th>
+					</tr>
+				</thead> -->
+				<tbody>
+					<tr>
+						<td>Platform</td>
+						<td>{{platform}} {{arch}}</td>
+					</tr>
+					<tr>
+						<td>Meteor version</td>
+						<td>{{release}}</td>
+					</tr>
+					<tr>
+						<td>Node version</td>
+						<td>{{version}}</td>
+					</tr>
+					<tr>
+						<td>Uptime</td>
+						<td>{{HHMMSS uptime}}</td>
+					</tr>
+					<tr>
+						<td>CPUS</td>
+						<td>{{cpus.length}}</td>
+					</tr>
+					<tr>
+						<td>Memory</td>
+						<td>{{filesize memory}}</td>
+					</tr>
+					<tr>
+						<td>Free memory</td>
+						<td>{{filesize freemem}}</td>
+					</tr>
+					<tr>
+						<td>Used memory</td>
+						<td>{{filesize usedmemory}}</td>
+					</tr>
+					<tr>
+						<td>Load avg</td>
+						<td>{{loadavg}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		{{/each}}
+	</div>
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		<h1>Events 
+			<span class="text-muted">
+				<small><a href="{{pathFor 'logs'}}">Detail</a></small>	
+			</span>
+		</h1>
+		<ul class="list-group">
+			{{#each logs}}
+			<li class="list-group-item clearfix">
+				<div class="col-md-3">
+					<span class="label label-info">log</span>
+					<span class="label label-default">{{timeAgo createdAt}}</span>
+					
+				</div>
+				<div class="col-md-9">
+					<div>{{text}}</div>
+				</div>
+			</li>
+			{{/each}}
+		</ul>
+	</div>
+</div>
+</template>

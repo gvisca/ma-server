@@ -1,0 +1,42 @@
+<template name="sessions_detail">
+<div id="sessions_detail">
+<div class="panel">
+    <div class="heading">
+        <span class="title">Sessions detail</span>
+    </div>
+    <div class="content">
+        <table class="table striped hovered cell-hovered border bordered">
+        	<thead>
+        		<tr>
+        			<th>Opened</th>
+					<th>Closed</th>
+					<th>Duration</th>
+					<th>City</th>
+					<th>Country</th>
+					<th>Browser</th>
+					<th>OS</th>
+					<th>Screen</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+				{{#each sessions}}
+				<tr>
+					<td>{{timeAgo opened}}</td>
+					<td>{{timeAgo closed}}</td>
+					<td>{{duration}}</td>
+					<td>{{geo.city}}</td>
+					<td>{{geo.country}}</td>
+					<td>{{ua.ua.family}} {{ua.ua.major}}</td>
+					<td>{{ua.os.family}}</td>
+					<td>{{resolution}}</td>
+				</tr>
+				{{/each}}
+			</tbody>
+        </table>
+        <div class="sessions_map">
+        	{{>leafletMap name="sessions_map" options=leafletOptions}}
+        </div>
+    </div>
+</div>
+</div>
+</template>

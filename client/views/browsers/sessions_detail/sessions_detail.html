@@ -1,0 +1,117 @@
+<template name="sessions_detail">
+<div id="sessions_detail">
+	<div class="col-md-4">
+		<div class="panel panel-blue1">
+			<div class="panel-heading">
+				<h3 class="panel-title">By Country</h3>
+			</div>
+			<!-- <div class="panel-body"> -->
+				<table class="table table-hover sessions_by_country">
+					<thead>
+						<tr>
+							<th>Country</th>
+							<th>Sessions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each sessions_by_country}}
+						<tr>
+							<td class="country_logo"><img src="/images/countries/{{country}}.png" alt="{{country}} flag" title="{{country}}"></td>
+							<td>{{count}}</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			<!-- </div> -->
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-green1">
+			<div class="panel-heading">
+				<h3 class="panel-title">By Browser</h3>
+			</div>
+			<!-- <div class="panel-body"> -->
+				<table class="table table-hover sessions_by_country">
+					<thead>
+						<tr>
+							<th>Browser</th>
+							<th>Sessions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each sessions_by_browser}}
+						<tr>
+							<td class="country_logo"><img src="/images/browsers/{{browser}}.png" alt="{{browser}} browser" title="{{browser}}"></td>
+							<td>{{count}}</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			<!-- </div> -->
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-red1">
+			<div class="panel-heading">
+				<h3 class="panel-title">By Operating System</h3>
+			</div>
+			<!-- <div class="panel-body"> -->
+				<table class="table table-hover sessions_by_country">
+					<thead>
+						<tr>
+							<th>OS</th>
+							<th>Sessions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each sessions_by_os}}
+						<tr>
+							<td class="country_logo"><img src="/images/os/{{os}}.png" alt="{{os}} logo" name="{{os}}"></td>
+							<td>{{count}}</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			<!-- </div> -->
+		</div>
+	</div>
+<!-- 	<div class="panel">
+		<div class="heading">
+			<span class="title">Sessions detail</span>
+		</div>
+		<div class="content">
+			<table class="table striped hovered cell-hovered border bordered">
+				<thead>
+					<tr>
+						<th>Opened</th>
+						<th>Closed</th>
+						<th>Duration</th>
+						<th>City</th>
+						<th>Country</th>
+						<th>Browser</th>
+						<th>OS</th>
+						<th>Screen</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each sessions}}
+					<tr>
+						<td>{{timeAgo opened}}</td>
+						<td>{{timeAgo closed}}</td>
+						<td>{{duration}}</td>
+						<td>{{geo.city}}</td>
+						<td>{{geo.country}}</td>
+						<td>{{ua.ua.family}} {{ua.ua.major}}</td>
+						<td>{{ua.os.family}}</td>
+						<td>{{resolution}}</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+			<div class="sessions_map">
+				{{>leafletMap name="sessions_map" options=leafletOptions}}
+			</div>
+		</div>
+	</div> -->
+</div>
+</template>

@@ -1,0 +1,10 @@
+<template name="logs">
+	<div class="console grid">
+		{{#each logs}}
+			<p class="log-line row cells6">
+				<span class="log-date cell">{{moment createdAt}}</span>
+				<span class="log-text cell colspan5">{{text}}</span>
+			</p>
+		{{/each}}
+	</div>
+</template>

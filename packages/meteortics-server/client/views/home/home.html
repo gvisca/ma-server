@@ -1,0 +1,25 @@
+<template name="home">
+<div class="row">
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+	{{> active_sessions}}
+</div>
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+	{{> sessions_total}}
+</div>
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+	{{> app_servers}}
+</div>
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+	<!-- {{> sessions_tile}} -->
+</div>	
+</div>
+<div class="row">
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+	{{> sessions_graph}}
+</div>
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+	{{> sessions_map}}
+</div>
+</div>
+
+</template>

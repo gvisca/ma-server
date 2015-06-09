@@ -1,0 +1,111 @@
+<template name="app_new">
+<div id="app_new">
+	<div class="col-md-12">
+		<div class="panel panel-blue1">
+			
+			{{#if $.Session.get newapp_id}}
+			
+			<h3 class="text-success">Congratulations</h3>
+			<p>Your application has been registered</p>
+			<p>Just insert the following code in your app on server side (ex:<b>server/meteortics.js</b>)</p>
+			<pre>Meteortics.connect({
+				appId:'{{$.Session.get newapp_id}}',
+				secret:'{{$.Session.get newapp_secret}}'
+			})</pre>
+			<p>OR add the folowwing entry in your settings file</p>
+			<pre>{
+				  "meteortics":{
+				    "appId":"{{$.Session.get newapp_id}}",
+				    "secret":"{{$.Session.get newapp_secret}}"
+				  }
+			}</pre>
+			<a href="/">back</a>
+			
+			{{else}}
+			<div class="panel-heading">
+				<h3 class="panel-title">Create a new application</h3>
+			</div>
+			<div class="panel-body">
+				<form action="" method="POST" class="form-horizontal" role="form">
+					
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Application name</label>
+						<div class="col-sm-10">
+							<input type="text" name="name" class="form-control newapp_name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="secret" class="col-sm-2 control-label">Application secret</label>
+						<div class="col-sm-10">
+							<input type="text" name="secret" class="form-control newapp_secret">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="log_enabled" class="col-sm-2 control-label">Enable server logging</label>
+						<div class="col-sm-10 checkbox">
+							<input type="checkbox" name="log_enabled" class="log_enabled">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="health_enabled" class="col-sm-2 control-label">Enable server health</label>
+						<div class="col-sm-10 checkbox">
+							<input type="checkbox" name="health_enabled" class="health_enabled">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-10 col-sm-offset-2">
+							<button type="submit" class="btn bg-blue1">Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			{{/if}}
+		</div>
+	</div>
+</div>
+{{#if $.Session.get newapp_id}}
+<h3 class="text-success">Congratulations</h3>
+<p>Your application has been registered</p>
+<p>Just insert the following code in your app on server side (ex:<b>server/meteortics.js</b>)</p>
+<pre>Meteortics.connect({
+	appId:'{{$.Session.get newapp_id}}',
+	secret:'{{$.Session.get newapp_secret}}'
+})</pre>
+<p>OR add the folowwing entry in your settings file</p>
+<pre>{
+	  "meteortics":{
+	    "appId":"{{$.Session.get newapp_id}}",
+	    "secret":"{{$.Session.get newapp_secret}}"
+	  }
+}</pre>
+<a href="/">back</a>
+{{else}}
+<h1>Create a new Application</h1>
+<form action="/newapp" method="POST" role="form">
+	<div class="form-group">
+		<label for="">Application name</label>
+		<input type="text" class="input-control text newapp_name" name="name">
+	</div>
+	<div class="form-group">
+		<label for="">Application secret</label>
+		<input type="text" class="input-control text newapp_secret" name="secret">
+	</div>
+	<div class="form-group">
+		<label for="">Enable Server Logs</label>
+		<label class="switch">
+			<input type="checkbox" name="log_enabled" class="log_enabled">
+			<span class="check"></span>
+		</label>
+	</div>
+	<div class="form-group">
+		<label for="">Enable Server Health</label>
+		<label class="switch">
+			<input type="checkbox" name="health_enabled" class="health_enabled">
+			<span class="check"></span>
+		</label>
+	</div>
+	<button type="submit" class="button primary">Submit</button>
+</form>
+{{/if}}
+</template>

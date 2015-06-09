@@ -1,0 +1,8 @@
+<template name="health">
+	CPUS : {{cpus}}
+	Memory : {{os.memory}}
+
+	{{#each logs}}
+		<p>{{createdAt}} <pre>{{text}}</pre></p>
+	{{/each}}
+</template>

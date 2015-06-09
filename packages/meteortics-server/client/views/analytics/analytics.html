@@ -1,0 +1,67 @@
+<template name="analytics">
+
+	<div class="container">
+		<div class="col-md-3">
+			<div class="kpi">
+				<div class="main_number">
+					{{usersConnected}}
+				</div>
+				<div class="main_number_subtitle">
+					Users online
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="kpi">
+				<div class="main_number">
+					{{sessions_last_day}}
+				</div>
+				<div class="main_number_subtitle">
+					Sessions (24H)
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="kpi">
+				<div class="main_number">
+					{{uniq_user_last_day}}
+				</div>
+				<div class="main_number_subtitle">
+					Unique users (24H)
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<table class="table table-condensed table-hover">
+				<thead>
+					<tr>
+						<th>Time</th>
+						<th>Length</th>
+						<th>City</th>
+						<th>Country</th>
+						<th>Page</th>
+						<th>Last Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each pages}}
+					<tr>
+						<td>{{timeAgo createdAt}}</td>
+						<td>{{.}}</td>
+						<td>{{.}}</td>
+						<td>{{geo.country}}</td>
+						<td>{{path}}</td>
+						<td>{{.}}</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	Users online : {{usersConnected}}
+  {{#each events}}
+  	EVENT :
+  	<pre>{{json .}}</pre>
+  {{/each}}
+</template>

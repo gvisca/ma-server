@@ -1,0 +1,47 @@
+<template name="app_list">
+<div id="app_list">
+	<a href="{{pathFor 'app_new'}}" class="btn bg-blue2 btn-app-new">Create a new App</a>
+	<div class="col-md-12">
+		<div class="panel panel-green2">
+			<!-- Default panel contents -->
+			<div class="panel-heading">
+				<h4 class="panel-title">Registered applications</h4>
+			</div>
+			<div class="panel-body">
+				<p>Text goes here...</p>
+			</div>
+			
+			<!-- Table -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Secret</th>
+						<th>Log</th>
+						<th>Health</th>
+						<th>Created</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each apps}}
+					<tr>
+						<td>{{_id}}</td>
+						<td>{{name}}</td>
+						<td>{{secret}}</td>
+						<td>{{log_enabled}}</td>
+						<td>{{health_enabled}}</td>
+						<td>{{moment createdAt}}</td>
+						<td>
+							<a href="{{pathFor 'app_show' id=_id}}" class="btn btn-xs bg-green2">show</a>
+							<a href="/apps/delete/{{_id}}" class="btn btn-xs bg-red1 btn-delete">delete</a>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>	
+	</div>
+</div>
+</template>

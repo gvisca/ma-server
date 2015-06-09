@@ -1,0 +1,72 @@
+<template name="layout">
+<div id="wrapper">
+	<div class="overlay"></div>
+	
+	<!-- Sidebar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+		<ul class="nav sidebar-nav">
+			<li class="sidebar-brand">
+				<a href="/">
+					Meteor Analytics
+				</a>
+			</li>
+			<li>
+				<a href="{{pathFor 'home'}}"><i class="fa fa-home"></i> Home</a>
+			</li>
+			<h5><i class="fa fa-bar-chart"></i> Browser analytics</h5>
+			<li>
+				<a href="{{pathFor 'analytics'}}">Analytics</a>
+			</li>
+			<li>
+				<a href="{{pathFor 'sessions_detail'}}">Sessions</a>
+			</li>
+			<li>
+				<a href="{{pathFor 'page_views_detail'}}">Page views</a>
+			</li>
+			<h5><i class="fa fa-server"></i> Servers analytics</h5>
+			<li>
+				<a href="{{pathFor 'servers_detail'}}">Servers</a>
+			</li>
+			<li>
+				<a href="{{pathFor 'servers_health'}}">Health</a>
+			</li>
+			<li>
+				<a href="{{pathFor 'logs'}}">Logs</a>
+			</li>
+			<h5><i class="fa fa-cogs"></i> Tools</h5>
+			<li>
+				<a href="{{pathFor 'app_list'}}">Manage apps</a>
+			</li>
+			<li>
+				<a href="{{pathFor 'app_new'}}">Create app</a>
+			</li>
+		</ul>
+	</nav>
+	<!-- /#sidebar-wrapper -->
+	<!-- Page Content -->
+	<div id="page-content-wrapper">
+		<button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+		<span class="hamb-top"></span>
+		<span class="hamb-middle"></span>
+		<span class="hamb-bottom"></span>
+		</button>
+		
+		<div class="container">
+			<div class="row">
+				<div class="app-dropdown">
+					{{> app_chooser}}	
+				</div>
+				<div class="app-datepicker">
+					{{> daterangepicker}}	
+				</div>
+				
+			
+				<div class="col-lg-12">
+					{{> yield}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</template>
