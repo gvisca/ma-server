@@ -1,14 +1,14 @@
 <template name="app_list">
 <div id="app_list">
-	<a href="{{pathFor 'app_new'}}" class="btn bg-blue2 btn-app-new">Create a new App</a>
+	<a href="{{pathFor 'app_new'}}" class="btn bg-green2 btn-app-new">Create a new App</a>
 	<div class="col-md-12">
-		<div class="panel panel-green2">
+		<div class="panel panel-purple1">
 			<!-- Default panel contents -->
 			<div class="panel-heading">
 				<h4 class="panel-title">Registered applications</h4>
 			</div>
 			<div class="panel-body">
-				<p>Text goes here...</p>
+				<p>From here you can manage your apps, register new one, ...</p>
 			</div>
 			
 			<!-- Table -->
@@ -28,10 +28,10 @@
 					{{#each apps}}
 					<tr>
 						<td>{{_id}}</td>
-						<td>{{name}}</td>
+						<td><a href="{{pathFor 'app_show' id=_id}}">{{name}}</a></td>
 						<td>{{secret}}</td>
-						<td>{{log_enabled}}</td>
-						<td>{{health_enabled}}</td>
+						<td class='onoff log_enabled'>{{log_enabled}}</td>
+						<td class='onoff health_enabled'>{{health_enabled}}</td>
 						<td>{{moment createdAt}}</td>
 						<td>
 							<a href="{{pathFor 'app_show' id=_id}}" class="btn btn-xs bg-green2">show</a>

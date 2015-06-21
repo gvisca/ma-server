@@ -1,18 +1,25 @@
-// Apps.remove({})
-// Events.remove({})
-// Logs.remove({})
-// Pages.remove({})
-// Connexions.remove({})
-// Health.remove({})
-Servers.remove({})
+// Set all remote servers offline on startup
+// Once they subscribe to 'ma_server_auth' they
+// will be updated as online
+Meteor.startup(function(){
+    MA_Servers.update({},{$set:{active:false}}, {multi: true})
+    MA_Health.remove({})
+})
 
-parser = Meteor.npmRequire('ua-parser');
-geoip = Meteor.npmRequire('geoip-lite');
+// Utilities for extracting info from user agent
+var parser = Meteor.npmRequire('ua-parser');
+var geoip = Meteor.npmRequire('geoip-lite');
+
 
 Meteor.methods({
     Meteortics_Event: function(params) {
 
-        // Server information
+        /*
+         *
+         * Server info received
+         *
+        */
+
         //
         // {
         //     "_id" : "2JuSZ5FygvQu8Lo9N",
@@ -254,72 +261,150 @@ Meteor.methods({
         //     "createdBy" : "0"
         // }
         if (params.type == 'server_info') {
-            // console.log('server_info', params)
-            
-            var server = Servers.find({serverId:params.serverId})
-            if(server.count()==0){
-                Servers.insert(params)
+            // check(params.serverId,'string')
+            console.log('server info received for server',params.serverId) 
+            if (MA_Servers.find({serverId: params.serverId}).count() == 0) {
+                MA_Servers.insert(params)
             }
         }
 
-         // Health received
+        /*
+         *
+         * Health received
+         *
+        */
+
+        // {
+        //     "_id": "N4Zhd3zkvrkPoQMaC",
+        //     "cpus": [{
+        //         "model": "Intel(R) Core(TM)2 Duo CPU     P7450  @ 2.13GHz",
+        //         "speed": 800,
+        //         "times": {
+        //             "user": 160621800,
+        //             "nice": 1560900,
+        //             "sys": 43517900,
+        //             "idle": 2274140300,
+        //             "irq": 36200
+        //         }
+        //     }, {
+        //         "model": "Intel(R) Core(TM)2 Duo CPU     P7450  @ 2.13GHz",
+        //         "speed": 800,
+        //         "times": {
+        //             "user": 158409100,
+        //             "nice": 1507700,
+        //             "sys": 40829600,
+        //             "idle": 2274454400,
+        //             "irq": 33700
+        //         }
+        //     }],
+        //     "loadavg": [
+        //         1.01025390625,
+        //         2.35498046875,
+        //         1.68212890625
+        //     ],
+        //     "uptime": 255997.930395178,
+        //     "freemem": 509186048,
+        //     "usedmemory": 3631296512,
+        //     "processMem": 81920000,
+        //     "appId": "xczKQ6SY4mZJck545",
+        //     "serverId": "JvmxgJ8toC5aSADyd",
+        //     "type": "health",
+        //     "createdAt": ISODate("2015-06-12T18:40:49.956Z"),
+        //     "createdBy": "0"
+        // }
         if (params.type == 'health') {
-            // console.log('health', params)
-            Health.insert(params)
-            Servers.update({serverId:params.serverId},{$set:{
-                usedmemory:params.usedmemory,
-                freemem:params.freemem,
-                loadavg:params.loadavg,
-                uptime:params.uptime,
-                processMem:params.processMem
-            }})
+            MA_Health.insert(params)
+            MA_Servers.update({
+                serverId: params.serverId
+            }, {
+                $set: {
+                    usedmemory: params.usedmemory,
+                    freemem: params.freemem,
+                    loadavg: params.loadavg,
+                    uptime: params.uptime,
+                    processMem: params.processMem,
+                    active:true
+                }
+            })
         }
 
 
-        // Logs received
-        // Format :
+        /*
+         *
+         * Log receieved
+         *
+        */
+        
         // {
         //     "_id" : "bBGTHZyRXbMkL94Tc",
         //     "text" : "sending event type client_connexion\n",
         //     "appId" : "JxwD2aWBApNjnszRq",
+        //     "serverId": "JvmxgJ8toC5aSADyd",
         //     "type" : "log",
         //     "createdAt" : ISODate("2015-06-04T09:28:01.719Z"),
         //     "createdBy" : "0"
         // }
         if (params.type == 'log') {
-            Logs.insert(params)
+            MA_Logs.insert(params)
+        }
+
+        /*
+         *
+         * Error receieved
+         *
+        */
+        
+        // {
+        //     "_id" : "bBGTHZyRXbMkL94Tc",
+        //     "text" : "ERROR\n",
+        //     "appId" : "JxwD2aWBApNjnszRq",
+        //     "serverId": "JvmxgJ8toC5aSADyd",
+        //     "type" : "error",
+        //     "createdAt" : ISODate("2015-06-04T09:28:01.719Z"),
+        //     "createdBy" : "0"
+        // }
+        if (params.type == 'error') {
+            MA_Logs.insert(params)
         }
 
 
+        /*
+         *
+         * Client connexion receieved
+         *
+        */
+
+        // { ip: '127.0.0.1',
+        //   headers:
+        //    { 'x-forwarded-for': '127.0.0.1',
+        //      host: 'localhost:3000',
+        //      'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36',
+        //      'accept-language': 'fr-FR,fr;q=0.8,en;q=0.6,en-US;q=0.4',
+        //      'x-ip-chain': [ '127.0.0.1', '127.0.0.1' ] },
+        //   ddp: '1',
+        //   key: '',
+        //   secure: false,
+        //   language: 'fr',
+        //   referrer: '',
+        //   uid: 'keJNqhhaYEJF5CB4Y',
+        //   sid: 'J3G4ZNaNYZ99mN7CS',
+        //   appId : "JxwD2aWBApNjnszRq",
+        //   serverId : "JvmxgJ8toC5aSADyd",
+        //   type: 'init' }
         if (params.type == 'client_connexion') {
-            // { ip: '127.0.0.1',
-            //   headers:
-            //    { 'x-forwarded-for': '127.0.0.1',
-            //      host: 'localhost:3000',
-            //      'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36',
-            //      'accept-language': 'fr-FR,fr;q=0.8,en;q=0.6,en-US;q=0.4',
-            //      'x-ip-chain': [ '127.0.0.1', '127.0.0.1' ] },
-            //   ddp: '1',
-            //   key: '',
-            //   secure: false,
-            //   language: 'fr',
-            //   referrer: '',
-            //   uid: 'keJNqhhaYEJF5CB4Y',
-            //   sid: 'J3G4ZNaNYZ99mN7CS',
-            //   type: 'init' }
+            
+            MA_Events.insert(params)
 
-            //FOR TESTING
-            Events.insert(params)
-
+            console.warn("change 127.0.0.1 IP to have real ouput from geoip")
             if (params.ip == '127.0.0.1')
                 params.ip = '89.3.191.30'
+            
             var ua = parser.parse(params.headers['user-agent']);
             var geo = geoip.lookup(params.ip);
             params.ua = ua
             params.geo = geo
-            // console.log('geo', params.ip, geo)
 
-            Apps.update({
+            MA_Apps.update({
                 _id: params.appId
             }, {
                 $inc: {
@@ -327,15 +412,25 @@ Meteor.methods({
                 }
             })
             params.opened = new Date()
-            Sessions.insert(_.omit(params,'type'))
+            MA_Sessions.insert(_.omit(params, 'type'))
         }
 
 
+        /*
+         *
+         * Client deconnexion received
+         *
+        */
 
+        // { 
+        //     count: 2, 
+        //     sid: '9pnHQdPJtpSinjWLt', 
+        //     type: 'deinit' 
+        //     appId : "JxwD2aWBApNjnszRq",
+        //     serverId: "JvmxgJ8toC5aSADyd",
+        // }
         if (params.type == 'client_deconnexion') {
-            // { count: 2, sid: '9pnHQdPJtpSinjWLt', type: 'deinit' }
-            // console.log('client_deconnexion',params)
-            Apps.update({
+            MA_Apps.update({
                 _id: params.appId
             }, {
                 $set: {
@@ -343,44 +438,80 @@ Meteor.methods({
                 }
             })
 
-            Sessions.update({sessionId:params.sessionId},{$set:{closed:new Date()}})
+            MA_Sessions.update({
+                sessionId: params.sessionId
+            }, {
+                $set: {
+                    closed: new Date()
+                }
+            })
         }
 
+        /*
+         *
+         * Event received
+         *
+        */
 
+        // { type: 'event',
+        //  template: 'searchbar',
+        //  selector: 'click .small-search-btn',
+        //  formdata: [ { name: 'querystring', value: 'foot' } ],
+        //  connection: 'riF3vRTZS3APTQfEL',
+        //  sid: 'riF3vRTZS3APTQfEL' }
         if (params.type == 'event') {
-            // { type: 'event',
-            // 	template: 'searchbar',
-            // 	selector: 'click .small-search-btn',
-            // 	formdata: [ { name: 'querystring', value: 'foot' } ],
-            // 	connection: 'riF3vRTZS3APTQfEL',
-            // 	sid: 'riF3vRTZS3APTQfEL' }
-
+            console.log('event received',params)
+            MA_Events.insert(params)
         }
 
 
+
+         /*
+         *
+         * Login received
+         *
+        */
+
+        // { type: 'login',
+        //     pageId: 'Devkde4J3LdXkCoGs',
+        //     uid: 'XnePG8Nfo2xmt9YAe',
+        //     sessionId: '2gJ8Sd9m7h6gTkkGB',
+        //     params: {},
+        //     connection: 'BykuCo6vLRqNBCjqr',
+        //     appId: 'xczKQ6SY4mZJck545',
+        //     serverId: 'A55MB5aScGAYwKtk9' }
+
+        if (params.type == 'login') {
+            console.log('login received',params)
+            MA_Events.insert(params)
+        }
+
+
+        /*
+         *
+         * Page view received
+         *
+        */
+
+        // { type: 'page',
+        //  title: 'DataAsso',
+        //  path: '/actualites',
+        //  params: [],
+        //  connection: 'keMKvQmTzhGLdcPay',
+        //  sid: 'keMKvQmTzhGLdcPay' }
         if (params.type == 'page') {
-            // { type: 'page',
-            // 	title: 'DataAsso',
-            // 	path: '/actualites',
-            // 	params: [],
-            // 	connection: 'keMKvQmTzhGLdcPay',
-            // 	sid: 'keMKvQmTzhGLdcPay' }
-            Pages.insert(params)
+            console.log('page received',params)
+            MA_Pages.insert(params)
         }
 
 
 
         if (params.type == 'page_load') {
-            // console.log('page_load', params)
+            console.log('page_load', params)
 
         }
 
-        
 
 
     }
 })
-
-var handle_server_info = function(params) {
-
-}

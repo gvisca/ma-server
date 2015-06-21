@@ -1,11 +1,17 @@
 <template name="app_show">
-	<h3 class="has-success">Congratulations</h3>
-	<p>Your application has been registered</p>
-	<p>Just insert the following code in your app on server side (ex:<b>server/meteortics.js</b>)</p>
+	<h3 class="text-info"><a href="{{pathFor 'app_list'}}"><i class="fa fa-arrow-left"></i></a> How to register your application</h3>
+	
+	<p>Just insert the following code in your app on server side (ex:
+		<b>server/meteortics.js</b>)</p>
 	<pre>Meteortics.connect({
-	appId:'{{app_id}}'
+	appId:"{{app._id}}",
+	secret:"{{app.secret}}"
 })</pre>
-<button class='btn btn-danger'>Delete</button>
-<a href="/">back</a>
-
+	<p>OR add the folowwing entry in your settings file</p>
+	<pre>{ 
+	"meteortics":{
+		"appId":"{{app._id}}",
+		"secret":"{{app.secret}}"
+	}
+}</pre>
 </template>

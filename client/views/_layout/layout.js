@@ -15,10 +15,6 @@ function hamburger_cross() {
 	}
 }
 
-Template.layout.onCreated(function(){
-	this.subscribe('applications')
-})
-
 Template.layout.onRendered(function() {
 		trigger = $('.hamburger')
 		overlay = $('.overlay')

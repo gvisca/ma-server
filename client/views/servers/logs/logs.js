@@ -1,15 +1,19 @@
-Template.logs.onCreated(function(){
-	this.subscribe('logs',Session.get('appId'))
+Template.logs.onCreated(function() {
+	Tracker.autorun(function() {
+		Meteor.subscribe('logs', _Meteortics.get('appId'), _Meteortics.get('startDate'))
+	})
 })
-
-// Template.logs.onRendered(function(){
-// 	$.Metro.initAll();
-// })
 
 
 Template.logs.helpers({
-	logs:function(){
-		console.log('helper logs',Logs.find(),Logs.find().count())
-		return Logs.find({},{sort:{createdAt:-1}})
+	logs: function() {
+		return MA_Logs.find({
+			appId: _Meteortics.get('appId'),
+			createdAt: {
+				$gte: new Date(_Meteortics.get('startDate'))
+			}
+		}, {
+			sort: {createdAt: -1}
+		})
 	}
 })

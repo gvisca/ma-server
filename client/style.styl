@@ -1,10 +1,16 @@
-$blue1 = #3B5998
-$blue2 = #01A0D1
-$red1 = #DB4A39
-$green1 = #81B71A
-$green2 = #5CB85C
-$purple1 = #906094
-$orange1 = #F6BB42
+$blue1 = #005684
+$blue2 = #0078C3
+$red1 = #C71830
+$red2 = #E62035
+$green1 = #047D4F
+$green2 = #07AC4B
+$purple1 = #3F01A4
+$purple2 = #8701B0
+$orange1 = #F2BC00
+$orange2 = #FFD741
+$yellow1 = #F9BB04
+$yellow2 = #FFFE33
+
 $forecolor1 = #DEDEDE
 
 .fg-blue1
@@ -28,6 +34,13 @@ $forecolor1 = #DEDEDE
 	background-color : $red1
 	color : #EEE
 
+.fg-red2
+	color : $red2
+	
+.bg-red2
+	background-color : $red2
+	color : #EEE
+
 .fg-green1
 	color : $green1
 	
@@ -48,12 +61,26 @@ $forecolor1 = #DEDEDE
 .bg-purple1
 	background-color : $purple1
 	color : #EEE
+
+.fg-purple2
+	color : $purple2
+	
+.bg-purple2
+	background-color : $purple2
+	color : #EEE
 	
 .fg-orange1
 	color : $orange1
 	
 .bg-orange1
 	background-color : $orange1
+	color : #EEE
+
+.fg-orange2
+	color : $orange2
+	
+.bg-orange2
+	background-color : $orange2
 	color : #EEE	
 
 // stats
@@ -115,6 +142,10 @@ $forecolor1 = #DEDEDE
 	background-color: $red1
 	color: $forecolor1
 
+.panel-red2 .panel-heading
+	background-color: $red2
+	color: $forecolor1
+
 .panel-green1 .panel-heading
 	background-color: $green1
 
@@ -125,9 +156,22 @@ $forecolor1 = #DEDEDE
 .panel-purple1 .panel-heading
 	background-color: $purple1
 	color: white
+
+.panel-purple2 .panel-heading
+	background-color: $purple2
+	color: white
 	
 .panel-orange1 .panel-heading
 	background-color: $orange1
+
+.panel-orange2.panel-heading
+	background-color: $orange2
+
+.panel-yellow1 .panel-heading
+	background-color: $yellow1
+
+.panel-yellow2.panel-heading
+	background-color: $yellow2
 	
 // .bootbox .modal-body
 // 	background-color: $blue1

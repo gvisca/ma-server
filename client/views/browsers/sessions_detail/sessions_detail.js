@@ -1,57 +1,82 @@
 var markers = {};
 
 Template.sessions_detail.onCreated(function() {
-	this.subscribe('sessions', Session.get('appId'))
+	Tracker.autorun(function(){
+		Meteor.subscribe('sessions', _Meteortics.get('appId'), _Meteortics.get('startDate'), _Meteortics.get('endDate'))
+	})
+	
 })
 
 Template.sessions_detail.onRendered(function() {
-	leafletMaps.ready('sessions_map', function(map) {
-		Sessions.find().observeChanges({
-			added: function(id, session) {
-				// console.log(session);
-				var options = session.closed ? {color:'#1BA1E2'} : {color:'#FA6800'}
-				options.radius = 4
-				options._id = id
-				var marker = L.circleMarker(session.geo.ll,options).addTo(map.instance);
-				markers[id]=marker
-			},
-			changed:function(id, session){
-				// console.log('sessions_map changed', id, session, map.instance)
-				var marker = markers[id]
-				if(map.instance.hasLayer(marker)){
-					map.instance.removeLayer(marker)
-					delete markers[id]
-				}
-				var options = session.closed ? {color:'#FA6800'} : {color:'#1BA1E2'}
-				options.weight = 2
-				options._id = id
-				L.circleMarker(session.geo.ll,options).addTo(map.instance);
-				markers[id]=marker
-			},
-			removed:function(id){
-				// console.log('sessions_map removed', id, session)
-				var marker = markers[id]
-				if(map.instance.hasLayer(marker)){
-					map.removeLayer(marker)
-					delete markers[id]
-				}
-			}
-		});
-	});
+	// leafletMaps.ready('sessions_map', function(map) {
+	// 	console.log('sessions_map ready')
+	// 	MA_Sessions.find({
+	// 		appId: _Meteortics.get('appId'),
+	// 		opened: {
+	// 			$gte: new Date(_Meteortics.get('startDate')),
+	// 			$lte: new Date(_Meteortics.get('endDate'))
+	// 		}
+	// 	}).observeChanges({
+	// 		added: function(id, session) {
+	// 			// console.log('sessions_map added', id, session)
+	// 			if(!session.geo)
+	// 				return
+	// 			console.log('session added',session);
+	// 			var options = session.closed ? {color:'#1BA1E2'} : {color:'#FA6800'}
+	// 			options.radius = 4
+	// 			options._id = id
+	// 			var marker = L.circleMarker(session.geo.ll,options).addTo(map.instance);
+	// 			markers[id]=marker
+	// 		},
+	// 		changed:function(id, session){
+	// 			// console.log('sessions_map changed', id, session)
+	// 			if(!session.geo)
+	// 				return
+	// 			var marker = markers[id]
+	// 			if(map.instance.hasLayer(marker)){
+	// 				map.instance.removeLayer(marker)
+	// 				delete markers[id]
+	// 			}
+	// 			var options = session.closed ? {color:'#FA6800'} : {color:'#1BA1E2'}
+	// 			options.weight = 2
+	// 			options._id = id
+	// 			L.circleMarker(session.geo.ll,options).addTo(map.instance);
+	// 			markers[id]=marker
+	// 		},
+	// 		removed:function(id){
+	// 			// console.log('sessions_map removed', id, session)
+	// 			if(!session.geo)
+	// 				return
+	// 			var marker = markers[id]
+	// 			if(map.instance.hasLayer(marker)){
+	// 				map.removeLayer(marker)
+	// 				delete markers[id]
+	// 			}
+	// 		}
+	// 	});
+	// });
 })
 
 
 
 Template.sessions_detail.helpers({
 	sessions: function() {
-		return Sessions.find({
-			appId: Session.get('appId')
+		return MA_Sessions.find({
+			appId: _Meteortics.get('appId'),
+			opened: {
+				$gte: new Date(_Meteortics.get('startDate')),
+			}
 		},{sort:{opened:-1}})
 	},
 	sessions_by_country:function(){
-		var sessions = Sessions.find().map(function(d){
+		var sessions = MA_Sessions.find({
+			appId: _Meteortics.get('appId'),
+			opened: {
+				$gte: new Date(_Meteortics.get('startDate')),
+			}
+		}).map(function(d){
 			return {
-				country:d.geo.country,
+				country:(d.geo && d.geo.country) || 'Unknown',
 				value:1
 			}
 		})
@@ -66,7 +91,12 @@ Template.sessions_detail.helpers({
 		})
 	},
 	sessions_by_browser:function(){
-		var browsers = Sessions.find().map(function(d){
+		var browsers = MA_Sessions.find({
+			appId: _Meteortics.get('appId'),
+			opened: {
+				$gte: new Date(_Meteortics.get('startDate')),
+			}
+		}).map(function(d){
 			return {
 				browser:d.ua.family,
 				value:1
@@ -83,7 +113,12 @@ Template.sessions_detail.helpers({
 		})
 	},
 	sessions_by_os:function(){
-		var os = Sessions.find().map(function(d){
+		var os = MA_Sessions.find({
+			appId: _Meteortics.get('appId'),
+			opened: {
+				$gte: new Date(_Meteortics.get('startDate')),
+			}
+		}).map(function(d){
 			return {
 				os:d.ua.os.family,
 				value:1

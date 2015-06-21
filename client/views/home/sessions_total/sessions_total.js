@@ -1,11 +1,11 @@
-Template.sessions_total.onCreated(function(){
-	this.subscribe('sessions',Session.get('appId'))
-})
-
 Template.sessions_total.helpers({
-	sessions:function(){
-		return Sessions.find({
-			opened:{$gt:moment().subtract(1,'days').toDate()}
+	sessions: function() {
+		return MA_Sessions.find({
+			appId: _Meteortics.get('appId'),
+			opened: {
+				$gte: new Date(_Meteortics.get('startDate')),
+				$lte: new Date(_Meteortics.get('endDate'))
+			}
 		}).count()
 	}
 })

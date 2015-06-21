@@ -75,7 +75,9 @@
 			<!-- </div> -->
 		</div>
 	</div>
-<!-- 	<div class="panel">
+	<div class="clearfix"></div>
+	<div class="col-md-12">
+<div class="panel">
 		<div class="heading">
 			<span class="title">Sessions detail</span>
 		</div>
@@ -83,6 +85,7 @@
 			<table class="table striped hovered cell-hovered border bordered">
 				<thead>
 					<tr>
+						<th>IP</th>
 						<th>Opened</th>
 						<th>Closed</th>
 						<th>Duration</th>
@@ -96,6 +99,7 @@
 				<tbody>
 					{{#each sessions}}
 					<tr>
+						<td><a href="{{pathFor 'session_detail' id=_id}}">{{ip}}</a></td>
 						<td>{{timeAgo opened}}</td>
 						<td>{{timeAgo closed}}</td>
 						<td>{{duration}}</td>
@@ -108,10 +112,12 @@
 					{{/each}}
 				</tbody>
 			</table>
-			<div class="sessions_map">
+			<!-- <div class="sessions_map">
 				{{>leafletMap name="sessions_map" options=leafletOptions}}
-			</div>
+			</div> -->
 		</div>
-	</div> -->
+	</div>
+	</div>
+	
 </div>
 </template>

@@ -1,14 +1,14 @@
 <template name="app_chooser">
 <div id="app_chooser">
 	<div class="btn-group">
-		<button class="btn btn-success" type="button">
+		<button class="btn btn-default" type="button">
 		{{#if app}}
 			Site : {{app.name}}
 		{{else}}
 			Choose app
 		{{/if}}
 		</button>
-		<button data-toggle="dropdown" class="btn btn-success dropdown-toggle" type="button"><span class="caret"></span>
+		<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button"><span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu">
 			{{#each apps}}

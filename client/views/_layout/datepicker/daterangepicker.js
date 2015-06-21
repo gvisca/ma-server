@@ -1,16 +1,17 @@
+//https://github.com/dangrossman/bootstrap-daterangepicker/blob/master/examples.html
 Template.daterangepicker.onRendered(function(){
 
-	if(Session.get('startDate')==null || Session.get('endDate')==null){
-		Session.set('startDate',moment().subtract(29, 'days').format('MM/DD/YYYY'))
-		Session.set('endDate',moment().format('MM/DD/YYYY'))
+	if(_Meteortics.get('startDate')==null || _Meteortics.get('endDate')==null){
+		_Meteortics.set('startDate',moment().subtract(29, 'days').startOf('day').toISOString())
+		_Meteortics.set('endDate',moment().endOf('day').toISOString())
 	}
 
-	var r = $('#reportrange').daterangepicker({
+	$('#reportrange').daterangepicker({
         format: 'MM/DD/YYYY',
         startDate: moment().subtract(29,'days'),
         endDate: moment(),
         minDate: '01/01/2012',
-        maxDate: '12/31/2015',
+        maxDate: '12/31/2020',
         dateLimit: { days: 60 },
         showDropdowns: true,
         showWeekNumbers: true,
@@ -44,9 +45,19 @@ Template.daterangepicker.onRendered(function(){
     }, function(start, end, label) {
         // console.log(start.toISOString(), end.toISOString(), label);
         // $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-  //       Session.set('startDate',start.toISOString())
-		// Session.set('endDate',end.toISOString())
-        Session.set('startDate',start.format('MM/DD/YYYY'))
-        Session.set('endDate',end.format('MM/DD/YYYY'))
+        // _Meteortics.set('startDate',start.toISOString())
+        // _Meteortics.set('endDate',end.toISOString())
+        _Meteortics.set('startDate',start.startOf('day').toISOString())
+        _Meteortics.set('endDate',end.endOf('day').toISOString())
     });
+})
+
+
+Template.daterangepicker.helpers({
+    startDate:function(){
+        return moment(_Meteortics.get('startDate')).format('MMMM D, YYYY')
+    },
+    endDate:function(){
+        return moment(_Meteortics.get('endDate')).format('MMMM D, YYYY')
+    }
 })

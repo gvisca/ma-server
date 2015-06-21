@@ -8,7 +8,8 @@ UI.registerHelper('timeAgo', function(param){
 	return moment(param).fromNow()
 });
 
-UI.registerHelper('moment', function(param){
+UI.registerHelper('moment', function(param,format){
+    // var fo = format || 'lll'
 	return moment(param).format('lll')
 });
 
@@ -17,7 +18,7 @@ UI.registerHelper('filesize', function(param){
 });
 
 UI.registerHelper('HHMMSS', function(param){
-	var sec_num = parseInt(param, 10); // don't forget the second param
+	var sec_num = parseInt(param, 10);
     var hours   = Math.floor(sec_num / 3600);
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     var seconds = sec_num - (hours * 3600) - (minutes * 60);

@@ -10,11 +10,16 @@
 				{{#each logs}}
 				<p class="log-line row">
 					<div class="col-md-2">
+						{{#if $eq type 'log'}}
 						<span class="log-type label label-info">{{type}}</span>
+						{{/if}}
+						{{#if $eq type 'error'}}
+						<span class="log-type label label-danger">{{type}}</span>
+						{{/if}}
 						<span class="log-date label label-default">{{moment createdAt}}</span>
 					</div>
 					<div class="col-md-10">
-						<span class="log-text">{{text}}</span>
+						<span class="log-text">$> {{text}}</span>
 					</div>
 				</p>
 				{{/each}}

@@ -1,4 +1,14 @@
 <template name="home">
+{{#if no_app}}
+<div class="jumbotron">
+	<div class="container">
+		<h1>No application registered !</h1>
+		<p>
+			<a class="btn btn-primary btn-lg" href="{{pathFor 'app_new'}}">Create one</a>
+		</p>
+	</div>
+</div>
+{{else}}
 <div class="row">
 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 	{{> active_sessions}}
@@ -21,5 +31,5 @@
 	{{> sessions_map}}
 </div>
 </div>
-
+{{/if}}
 </template>
