@@ -21,7 +21,7 @@ Meteor.publish('ma_server_auth', function(params) {
 				self.added('ma_server_auth', app._id, {
 					appId: app._id,
 					log_enabled: app.log_enabled,
-					health_enabled: app.health_enabled,
+					health_enabled: app.health_enabled
 				});
 			}
 		},
@@ -60,6 +60,7 @@ Meteor.publish('ma_server_auth', function(params) {
 	if (this.connection)
 		this.connection.onClose(onclose);
 	else this._session.socket._session.connection._events.close.push(onclose);
+
 	this.ready();
 })
 
@@ -249,7 +250,7 @@ Meteor.publish('ma_health', function(id, from, to) {
 		sort: {
 			createdAt: -1
 		},
-		fields:{createdAt:1,freemem:1,loadavg:1,processMem:1,serverId:1},
+		fields:{createdAt:1,freemem:1,usedmemory:1,loadavg:1,processMem:1,serverId:1},
 		limit: 200
 	})
 })

@@ -3,7 +3,7 @@
 // will be updated as online
 Meteor.startup(function(){
     MA_Servers.update({},{$set:{active:false}}, {multi: true})
-    MA_Health.remove({})
+    //MA_Health.remove({})
 })
 
 // Utilities for extracting info from user agent

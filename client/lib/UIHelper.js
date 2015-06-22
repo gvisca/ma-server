@@ -9,7 +9,7 @@ UI.registerHelper('timeAgo', function(param){
 });
 
 UI.registerHelper('moment', function(param,format){
-    // var fo = format || 'lll'
+    // var f = _.isString(format) || 'lll'
 	return moment(param).format('lll')
 });
 
