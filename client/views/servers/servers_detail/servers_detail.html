@@ -1,10 +1,10 @@
 <template name="servers_detail">
-    <div id="servers_detail" class="container">
+    <div id="servers_detail">
         <div class="col-xs-12">
-            <!-- <ul class="list-group"> -->
+
             {{#each servers}}
             <!-- <li class="list-group-item"> -->
-            <div class="panel panel-blue1">
+            <div class="panel panel-primary">
                 <!-- Default panel contents -->
                 <div class="panel-heading">
                     <img src="/images/os/{{platform}}.png" class="img_logo" alt="toto">
@@ -138,6 +138,23 @@
                             {{/each}}
                     </div>
                 </div>
+            </div>
+            {{else}}
+            <div class="panel panel-warning">
+                  <div class="panel-heading">
+                        <h3 class="panel-title">NO SERVER</h3>
+                  </div>
+                  <div class="panel-body">
+                       <div class="jumbotron">
+                           <div class="container">
+                               <h1>Sorry,</h1>
+                               <p>No server online for this applciation</p>
+                               <p>
+                                   <a class="btn btn-primary btn-lg">Learn more</a>
+                               </p>
+                           </div>
+                       </div>
+                  </div>
             </div>
             {{/each}}
         </div>

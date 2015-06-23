@@ -1,13 +1,18 @@
 <template name="page_views">
 	<div id="page_views">
 	<a href="{{pathFor 'page_views_detail'}}" class="tile-link">
-		<div class="mini-stat clearfix bg-red1 rounded">
+		<!-- <div class="mini-stat clearfix bg-red1 rounded">
 		<span class="mini-stat-icon"><i class="fa fa-file-text-o fg-red1"></i></span>
 		<div class="mini-stat-info">
 			<span>{{page_count}}</span>
 			Page views (Total for period)
 		</div>
-	</div>
+		</div> -->
+		{{> status_panel
+		class='success'
+		text='Page views (Total for period)'
+		metric=page_count}}
+	
 	</a>
 </div>
 </template>

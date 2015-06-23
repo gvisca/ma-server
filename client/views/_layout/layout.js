@@ -16,17 +16,19 @@ function hamburger_cross() {
 }
 
 Template.layout.onRendered(function() {
-		trigger = $('.hamburger')
-		overlay = $('.overlay')
-		isClosed = false
+	_Meteortics.set('currentTheme','cosmo')
 
-		trigger.click(function() {
-			hamburger_cross();
-		});
+	trigger = $('.hamburger')
+	overlay = $('.overlay')
+	isClosed = false
 
-		$('[data-toggle="offcanvas"]').click(function() {
-			$('#wrapper').toggleClass('toggled');
-		});
+	trigger.click(function() {
+		hamburger_cross();
+	});
+
+	$('[data-toggle="offcanvas"]').click(function() {
+		$('#wrapper').toggleClass('toggled');
+	});
 })
 
 
@@ -36,9 +38,13 @@ Template.layout.events({
 		e.preventDefault();
 		$("#wrapper").toggleClass("active");
 	},
-	'click .sidebar-nav li':function(e,t){
+	'click .sidebar-nav li': function(e, t) {
 		// console.log('clicked on ul li')
 		hamburger_cross()
 		$('#wrapper').toggleClass('toggled');
+	},
+	'change #app_theme': function(e, t) {
+		console.log('changed app_theme',e,t,this,e.target.value)
+		_Meteortics.set('currentTheme',e.target.value)
 	}
 })

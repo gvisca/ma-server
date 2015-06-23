@@ -1,6 +1,22 @@
 <template name="app_chooser">
 <div id="app_chooser">
-	<div class="btn-group">
+<div class="btn-group">
+  <a href="#" class="btn btn-default">
+  {{#if app}}
+			Site : {{app.name}}
+		{{else}}
+			Choose app
+		{{/if}}
+		</a>
+  <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+  <ul class="dropdown-menu">
+   {{#each apps}}
+			<li><a href="/{{_id}}" class="select-app">{{name}}</a></li>
+			{{/each}}
+  </ul>
+</div>
+
+	<!-- <div class="btn-group">
 		<button class="btn btn-default" type="button">
 		{{#if app}}
 			Site : {{app.name}}
@@ -15,6 +31,6 @@
 			<li><a href="/{{_id}}" class="select-app">{{name}}</a></li>
 			{{/each}}
 		</ul>
-	</div>
+	</div> -->
 </div>
 </template>

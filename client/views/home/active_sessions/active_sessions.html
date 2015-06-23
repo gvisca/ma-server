@@ -1,11 +1,16 @@
 <template name="active_sessions">
 <div id="active_sessions">
-	<div class="mini-stat clearfix bg-blue1 rounded">
+
+	<!-- <div class="mini-stat clearfix alert">
 		<span class="mini-stat-icon"><i class="fa fa-user fg-blue1"></i></span>
 		<div class="mini-stat-info">
 			<span>{{users}}</span>
 			Active Sessions
 		</div>
-	</div>
+	</div> -->
+	{{> status_panel
+		class='danger'
+		text='Active Sessions'
+		metric=users}}
 </div>
 </template>
