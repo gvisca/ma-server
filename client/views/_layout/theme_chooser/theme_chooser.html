@@ -1,0 +1,28 @@
+<template name="theme_chooser">
+
+<head>
+<link rel="stylesheet" href="/styles/{{theme}}.css">
+</head>
+    <div class="btn-group">
+        <a href="#" class="btn btn-default">
+		  Theme : {{theme}}
+		</a>
+        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+        {{#each themes }}
+            <li><a href="#" data-val='{{this}}'>{{this}}</a></li>
+        {{/each}}
+        </ul>
+    </div>
+        <!-- </div>
+	<div class="form-group">
+		<div class="col-sm-10">
+			<select name="app_theme" id="app_theme" class="form-control">
+				<option value="cosmo">cosmo</option>
+				<option value="yeti">yeti</option>
+				<option value="superhero">superhero</option>
+			</select>
+		</div>
+	</div> -->
+</template>
+
